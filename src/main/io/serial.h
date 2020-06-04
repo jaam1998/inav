@@ -159,6 +159,15 @@ serialPort_t *openSerialPort(
     portMode_t mode,
     portOptions_t options
 );
+/*ELL*/
+serialPort_t *openCustomSerialPort(
+    serialReceiveCallbackPtr callback,
+    void *rxCallbackData,
+    uint32_t baudrate,
+    portMode_t mode,
+    portOptions_t options
+);
+/*ELL*/
 void closeSerialPort(serialPort_t *serialPort);
 
 void waitForSerialPortToFinishTransmitting(serialPort_t *serialPort);

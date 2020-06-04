@@ -42,7 +42,9 @@
 #include "config/parameter_group_ids.h"
 
 #include "cms/cms.h"
-
+/*ELL*/
+#include "custom/custom.h"
+/*ELL*/
 #include "drivers/1-wire.h"
 #include "drivers/accgyro/accgyro.h"
 #include "drivers/adc.h"
@@ -689,6 +691,9 @@ void init(void)
         setTaskEnabled(TASK_RPM_FILTER, true);
     }
 #endif
-
-    systemState |= SYSTEM_STATE_READY;
+/*ELL*/
+customSerialTest_Init();
+systemState |= SYSTEM_STATE_READY;
+/*ELL*/
+  
 }

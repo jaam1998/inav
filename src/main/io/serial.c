@@ -326,7 +326,22 @@ bool doesConfigurationUsePort(serialPortIdentifier_e identifier)
     serialPortConfig_t *candidate = serialFindPortConfiguration(identifier);
     return candidate != NULL && candidate->functionMask;
 }
-
+//*ELL*/
+serialPort_t *openCustomSerialPort(
+    serialReceiveCallbackPtr rxCallback,
+    void *rxCallbackData,
+    uint32_t baudRate,
+    portMode_t mode,
+    portOptions_t options)
+{
+    serialPort_t *serialPort = NULL;
+    serialPort = uartOpen(USART2, rxCallback, rxCallbackData, baudRate, mode, options);
+    if (!serialPort){
+        return NULL;
+    }
+    return serialPort;
+}
+/*ELL*/
 serialPort_t *openSerialPort(
     serialPortIdentifier_e identifier,
     serialPortFunction_e function,
