@@ -1,19 +1,46 @@
 #include "io/serial.h"
 #include "common/time.h"
+#include "drivers/serial.h"
+#include "common/printf.h"
+#include <stdint.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAXIMUM_STRING_SIZE 50
 
 static serialPort_t * serialPort = NULL;
-static serialPortConfig_t * portConfig;
+
 
 void customSerialTest (timeUs_t currentTimeUs){
     UNUSED(currentTimeUs);
-    char buf[10] = " Hola!!\n";
-    if (serialIsConnected(serialPort)) {
-            //serialWrite(serialPort,2);
-            serialPrint(serialPort, buf);
-        }
+   char inBuf[MAXIMUM_STRING_SIZE];
+    char outBuf[MAXIMUM_STRING_SIZE];
+    uint8_t i = 0;
+    static double serialValue = (double)0.0;
+    bool startReading = false;
+
+    while (serialRxBytesWaiting(serialPort)) {
+        char c = serialRead(serialPort);
+        if (i >= MAXIMUM_STRING_SIZE) break;
+        if (startReading){
+            inBuf[i] = c;
+            i++;
+        
 }
+      if(c == '<')startReading= true;
+      if (c == '>')break;
+    }
+      if(strlen(inBuf)>9){
+       serialValue = atof(inBuf);
+        serialValue += (double)0.01;
+        tfp_sprintf(outBuf,"%10f", serialValue);
+        serialPrint(serialPort, outBuf);
+      }  
+}       
+
 void customSerialTest_Init (void){
-    serialPort = openCustomSerialPort(NULL, NULL, baudRates[BAUD_115200], MODE_TX, SERIAL_NOT_INVERTED | SERIAL_STOPBITS_1 | SERIAL_PARITY_NO );
+    serialPort = openCustomSerialPort(NULL, NULL, baudRates[BAUD_921600], MODE_RX | MODE_TX, SERIAL_NOT_INVERTED | SERIAL_STOPBITS_1);
     //serialPort = openCSerialPort(portConfig->identifier, FUNCTION_NONE, NULL, NULL, baudRates[BAUD_115200], MODE_TX, SERIAL_NOT_INVERTED | SERIAL_STOPBITS_1 | SERIAL_PARITY_NO );
     //serialPort = uartOpen(USART2, NULL, NULL, baudRates[BAUD_115200], MODE_TX, SERIAL_NOT_INVERTED | SERIAL_STOPBITS_1 | SERIAL_PARITY_NO);
 }
