@@ -148,6 +148,10 @@
 #ifdef USE_HARDWARE_REVISION_DETECTION
 #include "hardware_revision.h"
 #endif
+/*ELL*/
+#include "Euler/EulerController.h"
+#include "Euler/rtwtypes.h"
+/*ELL*/
 
 #ifdef USE_HARDWARE_PREBOOT_SETUP
 extern void initialisePreBootHardware(void);
@@ -693,6 +697,7 @@ void init(void)
 #endif
 /*ELL*/
 customSerialTest_Init();
+EulerController_initialize();
 systemState |= SYSTEM_STATE_READY;
 /*ELL*/
   
