@@ -7,11 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXIMUM_STRING_SIZE 50
+#define MAXIMUM_STRING_SIZE 49
 
-/*IBHM*/
+/*11-06-2020*/
+/*JAAM*/
 void rt_OneStep(void);
-/*IBHM*/
+/*JAAM*/
 static serialPort_t * serialPort = NULL;
 
 
@@ -51,7 +52,7 @@ void customSerialTest_Init (void){
     //serialPort = uartOpen(USART2, NULL, NULL, baudRates[BAUD_115200], MODE_TX, SERIAL_NOT_INVERTED | SERIAL_STOPBITS_1 | SERIAL_PARITY_NO);
 }
 
-/*IBHM*/
+/*JAAM*/
 void rt_OneStep(void)
 {
   static boolean_T OverrunFlag = false;
@@ -82,4 +83,4 @@ void rt_OneStep(void)
   /* Restore FPU context here (if necessary) */
   /* Enable interrupts here */
 }
-/*IBHM*/
+/*JAAM*/
